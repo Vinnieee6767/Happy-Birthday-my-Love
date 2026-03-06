@@ -1,36 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Happy Birthday ❤️</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+const landing = document.getElementById("landing");
+const letterPage = document.getElementById("letterPage");
+const letterBox = document.getElementById("letter");
 
-<body class="letter-page">
+const bgm = document.getElementById("bgm");
+const baseTypeSound = document.getElementById("typeSound");
 
-    <div class="paper-container">
-    <img src="oldpaper.png" class="paper">
+const text = `Dear Larah, 
 
-    <div class="letter-text">
+      One of the beauties of life is the constant surprises that it gives you, surprises either big or small, makes life worth living. Out of all of the surprises I got, you are the biggest and most beautiful thing that ever happened to me. Never have I ever thought that we would end up like this if you were to ask my old self. You are the most unexpected, yet the most pleasant person I had in my life and I am deeply thankful for it. 
 
-        <p class="letter-title">
-            Happy Birthday my Dearest Beloved &lt;333
-        </p>
+      In this lovely day of hearts, I want you to know that you are someone special and dear to me. We may be just starting now, but do know, in this sworn testimony of mine, that I will be here right by your side, ready when you call me, ready when you need me, and ready when you need someone to talk to every step of the way. I will be waiting for you, I will be standing right by your side while we achieve our dreams and turn them into reality. May we be blessed life, and let us celebrate this Valentine's day full of love and happiness. 
 
-        <p>
-            I still remember how I felt when I confessed my affections to you not too long ago, how everything happened unexpectedly and how I felt so sure about myself that YOU are the person I wanted to be with. We both didn’t expect the upbringing of our love story, It was God who made it happen. God knew we needed each other to complete the love story that he made and for that, I’m thankful. I still look back and remember how we were blinded of each other back in Highschool and how we’ve only found each other’s hearts now.
-        </p>
+      Thank You for being you, Thank You for being the sunshine that you are, and Thank You very much for everything you've ever given to me. I hope you are doing wonderful in this very special day, nothing but love and support <33. 
 
-        <p>
-            My love, you make me feel like home in your heart and I couldn’t thank you enough for choosing me, “Liking” you and getting “Liked” by you makes life so much better my dear. Thank youuuuu so so much for making me feel loved above and beyond. My dear, you deserve everything in this world and more!!! In this special day of yours, you deserve the best of the best!
-        </p>
+Yours in affection,  
+Paul`;
 
-        <p>
-            I sincerely wish you the abundance of happiness and love Langga. Thank you so so much for being yourself Langga, I feel so grateful to have cross paths with you and to have you in my life my dear❤️ Happy Birthday my dear sweet beloved, enjoy your special born day and please know You are loved ❤️.
-        </p>
+let i = 0;
+const typingSpeed = 130;      
+const soundSpeed = 250;      
 
-    </div>
-</div>
+landing.addEventListener("click", () => {
+
+  landing.style.display = "none";
+  letterPage.style.display = "flex";
+
+
+  bgm.currentTime = 0;
+  bgm.play().catch(() => {});
+
+  generatePouts();
+  typeWriter();
+});
+
+function playTypingSound() {
+  const sound = baseTypeSound.cloneNode();
+  sound.volume = 0.18;
+  sound.play().catch(() => {});
+}
+
+function typeWriter() {
+  if (i < text.length) {
+
+    const char = text.charAt(i);
+    letterBox.innerHTML += char;
+
+    if (char !== " " && char !== "\n") {
+      setTimeout(() => {
+        playTypingSound();
+      }, soundSpeed);
+    }
+
+    i++;
+    setTimeout(typeWriter, typingSpeed);
+  }
+}
 
     <button class="funsies-btn" onclick="goToFun()">
         click here for funsies
@@ -43,3 +67,4 @@
 </body>
 
 </html>
+
