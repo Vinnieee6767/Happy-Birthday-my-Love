@@ -16,10 +16,10 @@ function goToFun() {
     window.location.href = "fun.html";
 
 }
-const textElement = document.getElementById("text");
-const typingSound = document.getElementById("typing");
+const letterBox = document.getElementById("text");
+const baseTypeSound = document.getElementById("typing");
 
-const letter = `Happy Birthday my Dearest Beloved <333
+const text = `Happy Birthday my Dearest Beloved <333
 
 I still remember how I felt when I confessed my affections to you not too long ago, how everything happened unexpectedly and how I felt so sure about myself that YOU are the person I wanted to be with. We both didn’t expect the upbringing of our love story, It was God who made it happen. God knew we needed each other to complete the love story that he made and for that, I’m thankful. I still look back and remember how we were blinded of each other back in Highschool and how we’ve only found each other’s hearts now.
 
@@ -27,38 +27,32 @@ My love, you make me feel like home in your heart and I couldn’t thank you eno
 
 I sincerely wish you the abundance of happiness and love Langga. Thank you so so much for being yourself Langga, I feel so grateful to have cross paths with you and to have you in my life my dear❤️ Happy Birthday my dear sweet beloved, enjoy your special born day and please know You are loved ❤️.`;
 
-let index = 0;
+let i = 0;
+const typingSpeed = 130;
+const soundSpeed = 250;
 
-function typeLetter() {
+function playTypingSound() {
+    const sound = baseTypeSound.cloneNode();
+    sound.volume = 0.18;
+    sound.play().catch(() => {});
+}
 
-    if (index < letter.length) {
+function typeWriter() {
 
-        textElement.textContent += letter.charAt(index);
+    if (i < text.length) {
 
-        typingSound.currentTime = 0;
-        typingSound.play();
+        const char = text.charAt(i);
+        letterBox.innerHTML += char;
 
-        index++;
+        if (char !== " " && char !== "\n") {
+            setTimeout(() => {
+                playTypingSound();
+            }, soundSpeed);
+        }
 
-        setTimeout(typeLetter, 35);
+        i++;
+        setTimeout(typeWriter, typingSpeed);
     }
 }
 
-typeLetter();
-const audio = document.getElementById("bg-audio");
-
-function playRandomly() {
-    audio.play();
-
-    let randomTime = Math.floor(Math.random() * (60000 - 15000 + 1)) + 15000;
-
-    setTimeout(playRandomly, randomTime);
-}
-
-window.onload = function () {
-    playRandomly();
-};
-
-function goToFun() {
-    window.location.href = "fun.html";
-}
+typeWriter();
