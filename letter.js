@@ -1,7 +1,13 @@
 const audio = document.getElementById("bg-audio");
 
 function playRandomly() {
-    audio.play();
+    audio.currentTime = 0;
+
+    audio.play().catch(() => {
+        document.addEventListener("click", () => {
+            audio.play();
+        }, { once: true });
+    });
 
     let randomTime = Math.floor(Math.random() * (60000 - 15000 + 1)) + 15000;
 
@@ -37,22 +43,22 @@ function playTypingSound() {
     sound.play().catch(() => {});
 }
 
-function typeWriter() {
+function typeLetter() {
 
-    if (i < text.length) {
+    if (index < letter.length) {
 
-        const char = text.charAt(i);
-        letterBox.innerHTML += char;
+        const char = letter.charAt(index);
+        textElement.textContent += char;
 
         if (char !== " " && char !== "\n") {
-            setTimeout(() => {
-                playTypingSound();
-            }, soundSpeed);
+            typingSound.currentTime = 0;
+            typingSound.play().catch(()=>{});
         }
 
-        i++;
-        setTimeout(typeWriter, typingSpeed);
+        index++;
+
+        setTimeout(typeLetter, 110);
     }
 }
 
-typeWriter();
+typeLetter();
