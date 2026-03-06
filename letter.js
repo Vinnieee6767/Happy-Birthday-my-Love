@@ -1,31 +1,8 @@
 const audio = document.getElementById("bg-audio");
+const textElement = document.getElementById("text");
+const typingSound = document.getElementById("typing");
 
-function playRandomly() {
-    audio.currentTime = 0;
-
-    audio.play().catch(() => {
-        document.addEventListener("click", () => {
-            audio.play();
-        }, { once: true });
-    });
-
-    let randomTime = Math.floor(Math.random() * (60000 - 15000 + 1)) + 15000;
-
-    setTimeout(playRandomly, randomTime);
-}
-
-window.onload = function () {
-    playRandomly();
-};
-
-function goToFun() {
-    window.location.href = "fun.html";
-
-}
-const letterBox = document.getElementById("text");
-const baseTypeSound = document.getElementById("typing");
-
-const text = `Happy Birthday my Dearest Beloved <333
+const letter = `Happy Birthday my Dearest Beloved <333
 
 I still remember how I felt when I confessed my affections to you not too long ago, how everything happened unexpectedly and how I felt so sure about myself that YOU are the person I wanted to be with. We both didn’t expect the upbringing of our love story, It was God who made it happen. God knew we needed each other to complete the love story that he made and for that, I’m thankful. I still look back and remember how we were blinded of each other back in Highschool and how we’ve only found each other’s hearts now.
 
@@ -37,28 +14,41 @@ let i = 0;
 const typingSpeed = 130;
 const soundSpeed = 250;
 
+function playRandomly() {
+    audio.play();
+
+    let randomTime = Math.floor(Math.random() * (60000 - 15000 + 1)) + 15000;
+    setTimeout(playRandomly, randomTime);
+}
+
 function playTypingSound() {
-    const sound = baseTypeSound.cloneNode();
+    const sound = typingSound.cloneNode();
     sound.volume = 0.18;
     sound.play().catch(() => {});
 }
 
-function typeLetter() {
-
-    if (index < letter.length) {
-
-        const char = letter.charAt(index);
-        textElement.textContent += char;
+function typeWriter() {
+    if (i < letter.length) {
+        const char = letter.charAt(i);
+        textElement.innerHTML += char;
 
         if (char !== " " && char !== "\n") {
-            typingSound.currentTime = 0;
-            typingSound.play().catch(()=>{});
+            setTimeout(() => {
+                playTypingSound();
+            }, soundSpeed);
         }
 
-        index++;
-
-        setTimeout(typeLetter, 110);
+        i++;
+        setTimeout(typeWriter, typingSpeed);
     }
 }
 
-typeLetter();
+function goToFun() {
+    window.location.href = "fun.html";
+}
+
+// Make sure everything runs after the page fully loads
+window.onload = function() {
+    playRandomly();
+    typeWriter();
+};
