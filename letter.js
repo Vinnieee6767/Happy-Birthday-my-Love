@@ -14,19 +14,14 @@ let i = 0;
 const typingSpeed = 130;
 const soundSpeed = 250;
 
-function playRandomly() {
-    audio.play();
-
-    let randomTime = Math.floor(Math.random() * (60000 - 15000 + 1)) + 15000;
-    setTimeout(playRandomly, randomTime);
-}
-
+// Typing sound function
 function playTypingSound() {
     const sound = typingSound.cloneNode();
     sound.volume = 0.18;
     sound.play().catch(() => {});
 }
 
+// Typing function
 function typeWriter() {
     if (i < letter.length) {
         const char = letter.charAt(i);
@@ -43,12 +38,26 @@ function typeWriter() {
     }
 }
 
+// Random background audio
+function playRandomly() {
+    audio.play().catch(() => {});
+    let randomTime = Math.floor(Math.random() * (60000 - 15000 + 1)) + 15000;
+    setTimeout(playRandomly, randomTime);
+}
+
+// Funsies button
 function goToFun() {
     window.location.href = "fun.html";
 }
 
-// Make sure everything runs after the page fully loads
-window.onload = function() {
-    playRandomly();
+// Start everything safely
+function startLetter() {
     typeWriter();
-};
+    playRandomly();
+}
+
+// Wait for page load, then start after a small delay to ensure user interaction
+window.addEventListener("load", () => {
+    // some browsers allow audio to play after a slight timeout
+    setTimeout(startLetter, 500);
+});
